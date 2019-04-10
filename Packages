@@ -1,0 +1,13 @@
+-- Hãy copy chữ bên trong mục Control của file Deb Tweak.
+-- Hãy thêm 3 dòng sau khi Copy:
+Package: com.kendevil.demo
+Version: 1.4
+Section: Other
+Maintainer: KenDevil
+Architecture: iphoneos-arm
+Filename: ./debs/com.kendevil.fbadblock_1.4_iphoneos-arm.deb
+Size: 3.746
+MD5sum: b26fd4e0d1340061d8731285aac10ee5
+Description: chan qc fb
+Name: KenDevil
+Author: KenDevil
