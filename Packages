@@ -1,7 +1,7 @@
 Author: Reed Weichler <rweichler+cydia@gmail.com>
 Maintainer: BigBoss <bigboss@thebigboss.org>
 Name: Cylinder
-Package: com.r333d.cylinder
+Package: com.kendevil.cylinder
 Section: Tweaks
 Depends: firmware (>= 3.0), mobilesubstrate (>= 0.9.5000), preferenceloader
 Version: 1.0.6
