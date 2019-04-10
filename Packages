@@ -17,3 +17,30 @@ Icon: file:///Library/PreferenceBundles/CylinderSettings.bundle/Icon@2x.png
 Filename: ./debs/cylinder_1.0.6.deb
 Size: 255488
 MD5sum: 1c0eebe91f6e03faea96218dadf8f4cc
+
+Package: com.kendevil.pubgm
+Version: 0.10-23
+Section: Hacks Game
+Maintainer: Kiiimo <support@kiiimo.org>
+Depends: mobilesubstrate
+Architecture: iphoneos-arm
+Filename: ./debs/pubg_cheat.deb
+Size: 22462
+Installed-Size: 80
+Description: PUBG HACK for free enjoy ! 
+ 
+ No Recoil
+ 
+ No Camera Recoil
+ 
+ No Spread/Better 
+ 
+ Increased ADS FOV
+ 
+ * Use at your own risk
+Name: PUBG Mobile Cheats (iOS 12)
+Author: NitroxicDemon
+Sponsor: kiiimo.org <http://kiiimo.org>
+Depiction: http://cydia.kiiimo.org/index.php?pid=3709
+MD5sum: da5cdab0d8a1dd9a573baa1eb40d5b4d
+SHA1: 7fa1297fa681a6d7baa5e939512c429badb9ff24
