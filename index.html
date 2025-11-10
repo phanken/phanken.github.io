@@ -126,7 +126,7 @@ document.getElementById('calcBtn').addEventListener('click', ()=>{
 
   const otNormalPay = Math.round(hourlyOT * otNormal * 1.5);
   const otSundayPay = Math.round(hourlyOT * otSunday * 2.0);
-  const otNightPay = Math.round(hourlyOT * otNight * 1.3);
+  const otNightPay = Math.round(hourlyOT * otNight * 0.3);
   const otNightSunPay = Math.round(hourlyOT * otNightSun * 2.8);
   const ot215Pay = Math.round(hourlyOT * ot215 * 2.15);
 
@@ -179,3 +179,4 @@ document.getElementById('exportExcelBtn').addEventListener('click', ()=>{
 </script>
 </body>
 </html>
+
