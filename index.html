@@ -6,10 +6,10 @@
 <title>Bảng lương đẹp - Xuất Excel</title>
 <style>
 body{font-family:Segoe UI,Roboto,Arial;margin:0;padding:20px;background:#f6f8fb;color:#0b2545}
-.card{max-width:1000px;margin:20px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 8px 20px rgba(11,37,69,0.1)}
+.card{max-width:1000px;margin:20px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 8px 20px rgba(11,37,69,0.08)}
 h1{margin-bottom:16px;text-align:center;font-size:24px;color:#0b2545}
 label{display:block;margin-top:10px;font-weight:600}
-input[type="number"],input[type="text"]{width:100%;padding:10px;margin-top:6px;border:1px solid #e0e6ef;border-radius:6px;font-size:16px}
+input[type="number"],input[type="text"]{width:100%;padding:10px;margin-top:6px;border:1px solid #e0e6ef;border-radius:6px;font-size:16px;box-sizing:border-box}
 .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
 .col{flex:1;min-width:180px}
 button{margin-top:16px;padding:10px 14px;border-radius:8px;border:0;background:#0b6bff;color:white;font-weight:700;cursor:pointer}
@@ -22,35 +22,38 @@ th{background:#0b6bff;color:white}
 td:first-child, th:first-child{text-align:left}
 .total{background:#e6f0ff;font-weight:700}
 .note{font-size:14px;color:#586b90;text-align:left;padding:8px 12px}
+.small{font-size:13px;color:#6b7a95}
 @media(max-width:700px){.row{flex-direction:column}}
 </style>
 </head>
 <body>
-<div class="card">
-<h1>Bảng lương tháng</h1>
+<div class="card" role="region" aria-labelledby="title">
+<h1 id="title">Bảng lương tháng</h1>
 
-<label>Tổng lương tháng (VNĐ)</label>
-<input id="totalSalary" type="number" min="0" placeholder="VD: 8.000.000">
+<label for="totalSalary">Tổng lương tháng (VNĐ)</label>
+<input id="totalSalary" type="number" min="0" step="1" placeholder="VD: 8000000" aria-describedby="totalHelp">
+<div id="totalHelp" class="small">Tổng lương trước thuế/khấu trừ (lương tháng).</div>
 
-<label>Ngày công thực tế</label>
-<input id="actualDays" type="number" min="0" step="any" placeholder="VD: 22">
+<label for="actualDays">Ngày công thực tế</label>
+<input id="actualDays" type="number" min="0" step="0.1" placeholder="VD: 22">
 
-<label>Lương tính tăng ca (VNĐ)</label>
-<input id="otSalaryInput" type="number" min="0" step="any" placeholder="VD: 8.000.000">
+<label for="otSalaryInput">Lương tính tăng ca (VNĐ)</label>
+<input id="otSalaryInput" type="number" min="0" step="1" placeholder="VD: 8000000">
+<div class="small">Dùng để tính lương giờ (thường là lương cơ sở dùng để tính OT).</div>
 
-<label>Tiền chuyên cần (VNĐ)</label>
-<input id="attendanceBonus" type="number" min="0" step="any" placeholder="VD: 500000">
+<label for="attendanceBonus">Tiền chuyên cần (VNĐ)</label>
+<input id="attendanceBonus" type="number" min="0" step="1" placeholder="VD: 500000">
 
-<label>Ghi chú</label>
+<label for="note">Ghi chú</label>
 <input id="note" type="text" placeholder="VD: lương tháng 10">
 
 <h3>Giờ tăng ca</h3>
-<div class="row">
-  <div class="col"><label>Tăng ca thường (150%)</label><input id="otNormal" type="number" min="0" step="any" placeholder="VD: 10"></div>
-  <div class="col"><label>Tăng ca CN (200%)</label><input id="otSunday" type="number" min="0" step="any" placeholder="VD: 5"></div>
-  <div class="col"><label>Tăng ca đêm (30%)</label><input id="otNight" type="number" min="0" step="any" placeholder="VD: 8"></div>
-  <div class="col"><label>Tăng ca đêm CN (280%)</label><input id="otNightSun" type="number" min="0" step="any" placeholder="VD: 4"></div>
-  <div class="col"><label>Tăng ca 215%</label><input id="ot215" type="number" min="0" step="any" placeholder="VD: 6"></div>
+<div class="row" role="group" aria-label="Giờ tăng ca">
+  <div class="col"><label for="otNormal">Tăng ca thường (150%)</label><input id="otNormal" type="number" min="0" step="0.1" placeholder="VD: 10"></div>
+  <div class="col"><label for="otSunday">Tăng ca CN (200%)</label><input id="otSunday" type="number" min="0" step="0.1" placeholder="VD: 5"></div>
+  <div class="col"><label for="otNight">Tăng ca đêm (+30%)</label><input id="otNight" type="number" min="0" step="0.1" placeholder="VD: 8"></div>
+  <div class="col"><label for="otNightSun">Tăng ca đêm CN (280%)</label><input id="otNightSun" type="number" min="0" step="0.1" placeholder="VD: 4"></div>
+  <div class="col"><label for="ot215">Tăng ca 215%</label><input id="ot215" type="number" min="0" step="0.1" placeholder="VD: 6"></div>
 </div>
 
 <div class="row">
@@ -59,10 +62,10 @@ td:first-child, th:first-child{text-align:left}
   <div class="col"><button id="exportExcelBtn" class="excel">Xuất Excel</button></div>
 </div>
 
-<div id="error" class="error" style="display:none"></div>
+<div id="error" class="error" style="display:none" role="alert"></div>
 
 <!-- Bảng lương -->
-<div id="salaryTable" style="display:none">
+<div id="salaryTable" style="display:none" aria-live="polite">
   <table>
     <thead>
       <tr>
@@ -79,80 +82,100 @@ td:first-child, th:first-child{text-align:left}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
-const getVal=id=>parseFloat(document.getElementById(id).value)||0;
-const formatVND=n=>n.toLocaleString('vi-VN')+' ₫';
+const DAYS_PER_MONTH = 26;
+const HOURS_PER_DAY = 8;
+const fmtVND = n => new Intl.NumberFormat('vi-VN').format(Math.round(n)) + ' ₫';
+const getVal = id => {
+  const v = parseFloat(document.getElementById(id).value);
+  return Number.isFinite(v) ? v : 0;
+};
 
-let salaryData = []; // Lưu dữ liệu để xuất Excel
+let salaryData = [];
 
-document.getElementById('calcBtn').addEventListener('click',()=>{
-  const total=getVal('totalSalary');
-  const days=getVal('actualDays');
-  const otInput=getVal('otSalaryInput');
-  const attendanceBonus=getVal('attendanceBonus');
-  const otNormal=getVal('otNormal');
-  const otSunday=getVal('otSunday');
-  const otNight=getVal('otNight');
-  const otNightSun=getVal('otNightSun');
-  const ot215=getVal('ot215');
-  const note=document.getElementById('note').value;
+function showError(msg){
+  const e = document.getElementById('error');
+  e.textContent = '⚠️ ' + msg;
+  e.style.display = 'block';
+}
 
-  const error=document.getElementById('error');
-  const salaryTable=document.getElementById('salaryTable');
-  const tableBody=document.getElementById('tableBody');
-  const tableNote=document.getElementById('tableNote');
-  error.style.display='none'; salaryTable.style.display='none';
+function hideError(){
+  const e = document.getElementById('error');
+  e.style.display = 'none';
+}
 
-  if(total<=0){error.textContent='⚠️ Vui lòng nhập Tổng lương.';error.style.display='block';return;}
-  if(days<0){error.textContent='⚠️ Ngày công không hợp lệ.';error.style.display='block';return;}
-  if(otInput<=0){error.textContent='⚠️ Vui lòng nhập Lương tính OT.';error.style.display='block';return;}
+document.getElementById('calcBtn').addEventListener('click', ()=>{
+  hideError();
 
-  // Tính toán
-  const baseSalary=Math.round(total/26*days);
-  const hourlyOT=otInput/26/8;
+  const total = getVal('totalSalary');
+  const days = getVal('actualDays');
+  const otInput = getVal('otSalaryInput');
+  const attendanceBonus = getVal('attendanceBonus');
+  const otNormal = getVal('otNormal');
+  const otSunday = getVal('otSunday');
+  const otNight = getVal('otNight');
+  const otNightSun = getVal('otNightSun');
+  const ot215 = getVal('ot215');
+  const note = document.getElementById('note').value.trim();
 
-  const otNormalPay=Math.round(hourlyOT*otNormal*1.5);
-  const otSundayPay=Math.round(hourlyOT*otSunday*2.0);
-  const otNightPay=Math.round(hourlyOT*otNight*0.3);
-  const otNightSunPay=Math.round(hourlyOT*otNightSun*2.8);
-  const ot215Pay=Math.round(hourlyOT*ot215*2.15);
-  const totalOT=otNormalPay+otSundayPay+otNightPay+otNightSunPay+ot215Pay;
+  if(total <= 0){ showError('Vui lòng nhập Tổng lương hợp lệ.'); return; }
+  if(days < 0 || days > DAYS_PER_MONTH){ showError('Ngày công không hợp lệ.'); return; }
+  if(otInput <= 0){ showError('Vui lòng nhập Lương tính OT hợp lệ.'); return; }
 
-  const attendance=Math.round(attendanceBonus);
-  const insurance=Math.round(otInput*0.105);
-  const totalPay=Math.round(baseSalary + totalOT + attendance - insurance);
+  const baseSalary = Math.round(total / DAYS_PER_MONTH * days);
+  const hourlyOT = otInput / DAYS_PER_MONTH / HOURS_PER_DAY;
+
+  const otNormalPay = Math.round(hourlyOT * otNormal * 1.5);
+  const otSundayPay = Math.round(hourlyOT * otSunday * 2.0);
+  const otNightPay = Math.round(hourlyOT * otNight * 1.3);
+  const otNightSunPay = Math.round(hourlyOT * otNightSun * 2.8);
+  const ot215Pay = Math.round(hourlyOT * ot215 * 2.15);
+  const totalOT = otNormalPay + otSundayPay + otNightPay + otNightSunPay + ot215Pay;
+
+  const insurance = Math.round(otInput * 0.105);
+  const attendance = Math.round(attendanceBonus);
+  const totalPay = Math.round(baseSalary + totalOT + attendance - insurance);
 
   salaryData = [
     ["Mục", "Số tiền (VNĐ)"],
     ["Lương cơ bản", baseSalary],
     ["Tăng ca thường (150%)", otNormalPay],
     ["Tăng ca CN (200%)", otSundayPay],
-    ["Tăng ca đêm (30%)", otNightPay],
+    ["Tăng ca đêm (+30%)", otNightPay],
     ["Tăng ca đêm CN (280%)", otNightSunPay],
     ["Tăng ca 215%", ot215Pay],
     ["Tiền chuyên cần", attendance],
-    ["Bảo hiểm (10.5% OT)", insurance],
+    ["Bảo hiểm (10.5% của Lương tính OT)", insurance],
     ["Tổng thực nhận", totalPay]
   ];
 
-  // Hiển thị bảng
-  tableBody.innerHTML = salaryData.slice(1).map(r=>`<tr><td>${r[0]}</td><td>${formatVND(r[1])}</td></tr>`).join('');
-  tableNote.textContent=note;
-  salaryTable.style.display='block';
+  const tableBody = document.getElementById('tableBody');
+  tableBody.innerHTML = salaryData.slice(1).map(r=>`<tr><td>${r[0]}</td><td>${fmtVND(r[1])}</td></tr>`).join('');
+  document.getElementById('tableNote').textContent = note;
+  document.getElementById('salaryTable').style.display = 'block';
 });
 
-document.getElementById('resetBtn').addEventListener('click',()=>{
-  document.querySelectorAll('input').forEach(i=>i.value='');
-  document.getElementById('error').style.display='none';
-  document.getElementById('salaryTable').style.display='none';
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('input').forEach(i=>{
+    if(i.type === 'number' || i.type === 'text') i.value = '';
+  });
+  hideError();
+  document.getElementById('salaryTable').style.display = 'none';
   salaryData = [];
 });
 
-document.getElementById('exportExcelBtn').addEventListener('click',()=>{
-  if(salaryData.length === 0){alert("Vui lòng tính lương trước khi xuất Excel."); return;}
+document.getElementById('exportExcelBtn').addEventListener('click', ()=>{
+  if(salaryData.length === 0){ alert("Vui lòng tính lương trước khi xuất Excel."); return; }
   const ws = XLSX.utils.aoa_to_sheet(salaryData);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Bảng lương");
-  XLSX.writeFile(wb, "BangLuong.xlsx");
+
+  const note = (document.getElementById('note').value || '').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'_');
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  const filename = `BangLuong_${yyyy}${mm}${dd}${note ? '_' + note : ''}.xlsx`;
+  XLSX.writeFile(wb, filename);
 });
 </script>
 </body>
