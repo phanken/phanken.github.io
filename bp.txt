@@ -1,0 +1,21 @@
+Coppy 1 sheet mới lưu là 2
+Ở sheet 2
+
+Dán Vào Ô Ghi Chú
+
+=IFERROR(VLOOKUP(C6,'[2-CNC NHẬP KHO 2026 (5102).xlsx]入库-转包装-转生管'!$H:$S,12,0),"")
+
+Dán Vào Ô Trọng Lượng
+
+=G6/I6
+
+Dán Vào Ô Tổng
+
+=SUM(H6:H238)
+
+Ở sheet 1 
+Dán Vào Ô Trọng Lượng
+
+='2'!H6
+
+Rồi Ấn In là xong
