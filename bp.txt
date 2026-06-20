@@ -2,6 +2,9 @@ Coppy 1 sheet mới lưu là 2
 Ở sheet 2
 
 Dán Vào Ô Ghi Chú
+=IFERROR(VLOOKUP(C6,'D:\[bp.xls]INVR332026062000015120260620000'!$A:$G,7,0),"")
+
+
 
 =IFERROR(VLOOKUP(C6,'Z:\[2-CNC NHẬP KHO 2026 (5102).xlsx]入库-转包装-转生管'!$H:$S,12,0),"")
 
