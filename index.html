@@ -119,7 +119,7 @@
       const totalOT = otNormalPay + otSundayPay + otNightPay + otNightSunPay + ot215Pay;
 
       const attendance = Math.round(attendanceBonus);
-      const insurance = Math.round(otInput * 0.105);
+      const insurance = Math.round(total * 0.105);
       const totalPay = Math.round(baseSalary + totalOT + attendance - insurance);
 
       salaryData = [
