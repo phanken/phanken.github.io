@@ -1,214 +1,1112 @@
 <!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
   <title>Tính Lương EXWIN</title>
+
   <style>
-    body{font-family:Segoe UI,Roboto,Arial;margin:0;padding:20px;background:#f6f8fb;color:#0b2545}
-    .card{max-width:1000px;margin:20px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 8px 20px rgba(11,37,69,0.1)}
-    h1{margin-bottom:16px;text-align:center;font-size:24px;color:#0b2545}
-    label{display:block;margin-top:10px;font-weight:600}
-    input[type="number"],input[type="text"]{width:100%;padding:10px;margin-top:6px;border:1px solid #e0e6ef;border-radius:6px;font-size:16px}
-    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-    .col{flex:1;min-width:180px}
-    button{margin-top:16px;padding:10px 14px;border-radius:8px;border:0;background:#0b6bff;color:white;font-weight:700;cursor:pointer}
-    button.secondary{background:#e6eefc;color:#0b2545}
-    button.excel{background:#f39c12;color:white;margin-left:8px}
-    .error{color:#b00020;margin-top:8px}
-    table{width:100%;border-collapse:collapse;margin-top:20px}
-    th,td{padding:12px;text-align:right;border:1px solid #d0d7e0}
-    th{background:#0b6bff;color:white}
-    td:first-child, th:first-child{text-align:left}
-    .total{background:#e6f0ff;font-weight:700}
-    .note{font-size:14px;color:#586b90;text-align:left;padding:8px 12px}
-    @media(max-width:700px){.row{flex-direction:column}}
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f6f8fb;
+      color: #0b2545;
+    }
+
+    .card {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 22px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(11, 37, 69, 0.1);
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      text-align: center;
+      font-size: 26px;
+      color: #0b2545;
+    }
+
+    h3 {
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    input[type="month"] {
+      width: 100%;
+      margin-top: 6px;
+      padding: 11px;
+      border: 1px solid #dce3ed;
+      border-radius: 7px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #0b6bff;
+      box-shadow: 0 0 0 3px rgba(11, 107, 255, 0.1);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .col {
+      flex: 1;
+      min-width: 190px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 11px 15px;
+      border: 0;
+      border-radius: 8px;
+      background: #0b6bff;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button.secondary {
+      background: #e6eefc;
+      color: #0b2545;
+    }
+
+    button.excel {
+      background: #f39c12;
+      color: #ffffff;
+    }
+
+    .error {
+      display: none;
+      margin-top: 15px;
+      padding: 11px;
+      border-radius: 7px;
+      background: #fff1f1;
+      color: #b00020;
+      font-weight: 600;
+    }
+
+    .result-box {
+      display: none;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border: 1px solid #d0d7e0;
+      text-align: right;
+    }
+
+    th {
+      background: #0b6bff;
+      color: #ffffff;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    tr.deduction {
+      background: #fff3f3;
+    }
+
+    tr.total-ot {
+      background: #fff8e6;
+      font-weight: 700;
+    }
+
+    tr.total {
+      background: #e6f0ff;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .note {
+      padding: 10px 4px;
+      color: #586b90;
+      font-size: 14px;
+    }
+
+    .formula-note {
+      margin-top: 18px;
+      padding: 12px;
+      border-left: 4px solid #0b6bff;
+      border-radius: 6px;
+      background: #f2f7ff;
+      color: #405574;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 10px;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .row {
+        flex-direction: column;
+      }
+
+      .col {
+        min-width: 100%;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
-    <h1>Bảng tính lương tháng</h1>
+    <h1>Bảng tính lương EXWIN</h1>
 
-    <label>Tổng lương tháng (tổng lương - 400k chuyên cần)</label>
-    <input id="totalSalary" type="number" min="0" placeholder="VD: 8.000.000">
+    <div class="row">
+      <div class="col">
+        <label for="salaryMonth">Tháng lương</label>
 
-    <label>Ngày công thực tế</label>
-    <input id="actualDays" type="number" min="0" step="any" placeholder="VD: 22">
+        <input
+          id="salaryMonth"
+          type="month"
+        >
+      </div>
 
-    <label>Lương tính tăng ca (Lương CB + trợ cấp)</label>
-    <input id="otSalaryInput" type="number" min="0" step="any" placeholder="VD: 8.000.000">
+      <div class="col">
+        <label for="actualDays">Ngày công thực tế</label>
 
-    <label>Tiền chuyên cần (VNĐ)</label>
-    <input id="attendanceBonus" type="number" min="0" step="any" placeholder="VD: 400000">
+        <input
+          id="actualDays"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 27"
+        >
+      </div>
+    </div>
 
-    <label>Ghi chú</label>
-    <input id="note" type="text" placeholder="VD: lương tháng 10">
+    <div class="row">
+      <div class="col">
+        <label for="fullName">Họ và tên</label>
+
+        <input
+          id="fullName"
+          type="text"
+          placeholder="VD: Nguyễn Văn A"
+        >
+      </div>
+
+      <div class="col">
+        <label for="cardNumber">Số thẻ</label>
+
+        <input
+          id="cardNumber"
+          type="text"
+          placeholder="VD: EX12345"
+        >
+      </div>
+    </div>
+
+    <label for="totalSalary">
+      Tổng lương tháng chưa gồm chuyên cần
+    </label>
+
+    <input
+      id="totalSalary"
+      type="number"
+      min="0"
+      step="any"
+      placeholder="VD: 8900000"
+    >
+
+    <label for="otSalaryInput">
+      Lương tính tăng ca (lương cơ bản + trợ cấp)
+    </label>
+
+    <input
+      id="otSalaryInput"
+      type="number"
+      min="0"
+      step="any"
+      placeholder="VD: 8900000"
+    >
+
+    <div class="row">
+      <div class="col">
+        <label for="attendanceBonus">
+          Tiền chuyên cần
+        </label>
+
+        <input
+          id="attendanceBonus"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 400000"
+        >
+      </div>
+
+    </div>
+
+    <label for="note">Ghi chú</label>
+
+    <input
+      id="note"
+      type="text"
+      placeholder="VD: Lương tháng 5/2026"
+    >
 
     <h3>Giờ tăng ca</h3>
+
     <div class="row">
-      <div class="col"><label>Tăng ca thường (150%)</label><input id="otNormal" type="number" min="0" step="any" placeholder="VD: 10"></div>
-      <div class="col"><label>Tăng ca CN (200%)</label><input id="otSunday" type="number" min="0" step="any" placeholder="VD: 5"></div>
-      <div class="col"><label>Tăng ca đêm (30%)</label><input id="otNight" type="number" min="0" step="any" placeholder="VD: 8"></div>
-      <div class="col"><label>Tăng ca đêm CN (280%)</label><input id="otNightSun" type="number" min="0" step="any" placeholder="VD: 4"></div>
-      <div class="col"><label>Tăng ca 215%</label><input id="ot215" type="number" min="0" step="any" placeholder="VD: 6"></div>
+      <div class="col">
+        <label for="otNormal">
+          Tăng ca ngày thường 150%
+        </label>
+
+        <input
+          id="otNormal"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 30"
+        >
+      </div>
+
+      <div class="col">
+        <label for="otSunday">
+          Tăng ca Chủ nhật 200%
+        </label>
+
+        <input
+          id="otSunday"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 22"
+        >
+      </div>
+
+      <div class="col">
+        <label for="otNight">
+          Tăng ca đêm cộng thêm 30%
+        </label>
+
+        <input
+          id="otNight"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 90"
+        >
+      </div>
+
+      <div class="col">
+        <label for="otNight150">
+          Tăng ca đêm thường 150%
+        </label>
+
+        <input
+          id="otNight150"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 33"
+        >
+      </div>
+
+      <div class="col">
+        <label for="ot215">
+          Tăng ca đêm thường 215%
+        </label>
+
+        <input
+          id="ot215"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 15"
+        >
+      </div>
+
+      <div class="col">
+        <label for="otNightSun">
+          Tăng ca đêm Chủ nhật 280%
+        </label>
+
+        <input
+          id="otNightSun"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="VD: 11"
+        >
+      </div>
     </div>
 
     <div class="row">
-      <div class="col"><button id="calcBtn">Tính lương</button></div>
-      <div class="col"><button id="resetBtn" class="secondary">Xóa</button></div>
-      <div class="col"><button id="exportExcelBtn" class="excel">Xuất Excel</button></div>
+      <div class="col">
+        <button
+          id="calcBtn"
+          type="button"
+        >
+          Tính lương
+        </button>
+      </div>
+
+      <div class="col">
+        <button
+          id="resetBtn"
+          type="button"
+          class="secondary"
+        >
+          Xóa dữ liệu
+        </button>
+      </div>
+
+      <div class="col">
+        <button
+          id="exportExcelBtn"
+          type="button"
+          class="excel"
+        >
+          Xuất Excel
+        </button>
+      </div>
     </div>
 
-    <div id="error" class="error" style="display:none"></div>
+    <div
+      id="error"
+      class="error"
+    ></div>
 
-    <!-- Bảng lương -->
-    <div id="salaryTable" style="display:none">
+    <div
+      id="salaryTable"
+      class="result-box"
+    >
       <table>
         <thead>
           <tr>
             <th>Mục</th>
-            <th>Số tiền (VNĐ)</th>
+            <th>Số tiền</th>
           </tr>
         </thead>
+
         <tbody id="tableBody"></tbody>
       </table>
-      <div class="note" id="tableNote"></div>
+
+      <div
+        id="tableNote"
+        class="note"
+      ></div>
+    </div>
+
+    <div class="formula-note">
+      Ngày công tiêu chuẩn được cố định là 26 ngày.
+      Bảo hiểm được cố định là 10,5% tổng lương.
+      Công đoàn được cố định là 0,5% tổng lương.
+      Thực lĩnh bằng lương theo ngày công cộng chuyên cần và tiền tăng ca,
+      sau đó trừ bảo hiểm và công đoàn.
     </div>
   </div>
 
-  <!-- SheetJS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- ExcelJS -->
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+
+  <!-- FileSaver -->
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 
   <script>
-    const getVal = id => parseFloat(document.getElementById(id).value) || 0;
-    const formatVND = n => n.toLocaleString('vi-VN') + ' ₫';
-    let salaryData = [];
+    const getVal = id => {
+      return parseFloat(
+        document.getElementById(id).value
+      ) || 0;
+    };
 
-    document.getElementById('calcBtn').addEventListener('click', ()=>{
-      const total = getVal('totalSalary');
-      const days = getVal('actualDays');
-      const otInput = getVal('otSalaryInput');
-      const attendanceBonus = getVal('attendanceBonus');
-      const otNormal = getVal('otNormal');
-      const otSunday = getVal('otSunday');
-      const otNight = getVal('otNight');
-      const otNightSun = getVal('otNightSun');
-      const ot215 = getVal('ot215');
-      const note = document.getElementById('note').value;
+    const formatVND = value => {
+      return Math.round(value).toLocaleString("vi-VN") + " ₫";
+    };
 
-      const error = document.getElementById('error');
-      const salaryTable = document.getElementById('salaryTable');
-      const tableBody = document.getElementById('tableBody');
-      const tableNote = document.getElementById('tableNote');
-      error.style.display = 'none';
-      salaryTable.style.display = 'none';
+    const formatNumber = value => {
+      return Number(value).toLocaleString("vi-VN", {
+        maximumFractionDigits: 2
+      });
+    };
 
-      if (total <= 0) { error.textContent = '⚠️ Vui lòng nhập Tổng lương.'; error.style.display = 'block'; return; }
-      if (days < 0) { error.textContent = '⚠️ Ngày công không hợp lệ.'; error.style.display = 'block'; return; }
-      if (otInput <= 0) { error.textContent = '⚠️ Vui lòng nhập Lương tính OT.'; error.style.display = 'block'; return; }
+    let salaryResult = null;
 
-      // Tính toán
-      const baseSalary = Math.round(total / 26 * days);
-      const hourlyOT = otInput / 26 / 8;
+    function getMonthTitle() {
+      const salaryMonth =
+        document.getElementById("salaryMonth").value;
 
-      const otNormalPay = Math.round(hourlyOT * otNormal * 1.5);
-      const otSundayPay = Math.round(hourlyOT * otSunday * 2.0);
-      const otNightPay = Math.round(hourlyOT * otNight * 0.3); // 30% thêm => nhân 1.3
-      const otNightSunPay = Math.round(hourlyOT * otNightSun * 2.8);
-      const ot215Pay = Math.round(hourlyOT * ot215 * 2.15);
-      const totalOT = otNormalPay + otSundayPay + otNightPay + otNightSunPay + ot215Pay;
+      const note =
+        document.getElementById("note").value.trim();
 
-      const attendance = Math.round(attendanceBonus);
-      const insurance = Math.round(total * 0.105);
-      const totalPay = Math.round(baseSalary + totalOT + attendance - insurance);
+      if (note) {
+        return note;
+      }
 
-      salaryData = [
-        ["Mục", "Số tiền (VNĐ)"],
-        ["Lương cơ bản", baseSalary],
-        ["Tăng ca thường (150%)", otNormalPay],
-        ["Tăng ca CN (200%)", otSundayPay],
-        ["Tăng ca đêm (+30%)", otNightPay],
-        ["Tăng ca đêm CN (280%)", otNightSunPay],
-        ["Tăng ca 215%", ot215Pay],
-        ["Tiền chuyên cần", attendance],
-        ["Bảo hiểm (10.5% OT)", insurance],
-        ["Tổng thực nhận", totalPay]
+      if (salaryMonth) {
+        const parts = salaryMonth.split("-");
+
+        return `Lương Tháng ${parts[1]}/${parts[0]}`;
+      }
+
+      return "Bảng Lương EXWIN";
+    }
+
+    function calculateSalary() {
+      const standardDays = 26;
+      const actualDays = getVal("actualDays");
+
+      const fullName =
+        document.getElementById("fullName").value.trim();
+
+      const cardNumber =
+        document.getElementById("cardNumber").value.trim();
+
+      const totalSalary = getVal("totalSalary");
+      const otSalaryInput = getVal("otSalaryInput");
+      const attendance = Math.round(
+        getVal("attendanceBonus")
+      );
+
+      const insuranceRate = 10.5;
+      const unionRate = 0.5;
+
+      const otNormal = getVal("otNormal");
+      const otSunday = getVal("otSunday");
+      const otNight = getVal("otNight");
+      const otNight150 = getVal("otNight150");
+      const ot215 = getVal("ot215");
+      const otNightSun = getVal("otNightSun");
+
+      const error = document.getElementById("error");
+
+      error.style.display = "none";
+      error.textContent = "";
+
+      if (actualDays < 0) {
+        throw new Error(
+          "Ngày công thực tế không hợp lệ."
+        );
+      }
+
+      if (!fullName) {
+        throw new Error(
+          "Vui lòng nhập họ và tên."
+        );
+      }
+
+      if (!cardNumber) {
+        throw new Error(
+          "Vui lòng nhập số thẻ."
+        );
+      }
+
+      if (totalSalary <= 0) {
+        throw new Error(
+          "Vui lòng nhập tổng lương tháng."
+        );
+      }
+
+      if (otSalaryInput <= 0) {
+        throw new Error(
+          "Vui lòng nhập lương tính tăng ca."
+        );
+      }
+
+      const baseSalaryByDays = Math.round(
+        totalSalary / standardDays * actualDays
+      );
+
+      const hourlyOT =
+        otSalaryInput / standardDays / 8;
+
+      const otNormalPay = Math.round(
+        hourlyOT * otNormal * 1.5
+      );
+
+      const otSundayPay = Math.round(
+        hourlyOT * otSunday * 2
+      );
+
+      const otNightPay = Math.round(
+        hourlyOT * otNight * 0.3
+      );
+
+      const otNight150Pay = Math.round(
+        hourlyOT * otNight150 * 1.5
+      );
+
+      const ot215Pay = Math.round(
+        hourlyOT * ot215 * 2.15
+      );
+
+      const otNightSunPay = Math.round(
+        hourlyOT * otNightSun * 2.8
+      );
+
+      const totalOT =
+        otNormalPay +
+        otSundayPay +
+        otNightPay +
+        otNight150Pay +
+        ot215Pay +
+        otNightSunPay;
+
+      const insurance = Math.round(
+        totalSalary * insuranceRate / 100
+      );
+
+      const unionFee = Math.round(
+        totalSalary * unionRate / 100
+      );
+
+      const grossSalary =
+        baseSalaryByDays +
+        attendance +
+        totalOT;
+
+      const netSalary =
+        grossSalary -
+        insurance -
+        unionFee;
+
+      return {
+        title: getMonthTitle(),
+
+        fullName,
+        cardNumber,
+
+        standardDays,
+        actualDays,
+
+        totalSalary,
+        otSalaryInput,
+        attendance,
+
+        insuranceRate,
+        unionRate,
+
+        hourlyOT,
+
+        otNormal,
+        otSunday,
+        otNight,
+        otNight150,
+        ot215,
+        otNightSun,
+
+        baseSalaryByDays,
+
+        otNormalPay,
+        otSundayPay,
+        otNightPay,
+        otNight150Pay,
+        ot215Pay,
+        otNightSunPay,
+
+        totalOT,
+        insurance,
+        unionFee,
+        grossSalary,
+        netSalary
+      };
+    }
+
+    function renderSalary(result) {
+      const tableBody =
+        document.getElementById("tableBody");
+
+      const salaryTable =
+        document.getElementById("salaryTable");
+
+      const tableNote =
+        document.getElementById("tableNote");
+
+      const rows = [
+        {
+          name: "Lương theo ngày công",
+          value: result.baseSalaryByDays
+        },
+        {
+          name: "Tăng ca ngày thường 150%",
+          value: result.otNormalPay
+        },
+        {
+          name: "Tăng ca Chủ nhật 200%",
+          value: result.otSundayPay
+        },
+        {
+          name: "Tăng ca đêm cộng thêm 30%",
+          value: result.otNightPay
+        },
+        {
+          name: "Tăng ca đêm thường 150%",
+          value: result.otNight150Pay
+        },
+        {
+          name: "Tăng ca đêm thường 215%",
+          value: result.ot215Pay
+        },
+        {
+          name: "Tăng ca đêm Chủ nhật 280%",
+          value: result.otNightSunPay
+        },
+        {
+          name: "Tổng tiền tăng ca",
+          value: result.totalOT,
+          className: "total-ot"
+        },
+        {
+          name: "Tiền chuyên cần",
+          value: result.attendance
+        },
+        {
+          name: `Bảo hiểm (${formatNumber(
+            result.insuranceRate
+          )}%)`,
+          value: result.insurance,
+          className: "deduction"
+        },
+        {
+          name: `Công đoàn phí (${formatNumber(
+            result.unionRate
+          )}%)`,
+          value: result.unionFee,
+          className: "deduction"
+        },
+        {
+          name: "Tổng lương",
+          value: result.grossSalary
+        },
+        {
+          name: "Thực lĩnh",
+          value: result.netSalary,
+          className: "total"
+        }
       ];
 
-      tableBody.innerHTML = salaryData.slice(1)
-        .map(r => `<tr><td>${r[0]}</td><td>${formatVND(r[1])}</td></tr>`)
-        .join('');
-      tableNote.textContent = note;
-      salaryTable.style.display = 'block';
-    });
+      tableBody.innerHTML = rows.map(row => {
+        return `
+          <tr class="${row.className || ""}">
+            <td>${row.name}</td>
+            <td>${formatVND(row.value)}</td>
+          </tr>
+        `;
+      }).join("");
 
-    document.getElementById('resetBtn').addEventListener('click', ()=>{
-      document.querySelectorAll('input').forEach(i => i.value = '');
-      document.getElementById('error').style.display = 'none';
-      document.getElementById('salaryTable').style.display = 'none';
-      salaryData = [];
-    });
+      const note =
+        document.getElementById("note").value.trim();
 
-    // Xuất Excel với form đẹp: tiêu đề, kích thước cột, định dạng tiền, merge
-    document.getElementById('exportExcelBtn').addEventListener('click', ()=>{
-      if (salaryData.length === 0) { alert("Vui lòng tính lương trước khi xuất Excel."); return; }
+      tableNote.textContent = note
+        ? `Ghi chú: ${note}`
+        : "";
 
-      const note = document.getElementById('note').value || '';
-      // Tạo worksheet từ mảng (thêm 1 hàng tiêu đề lớn)
-      const title = [[`Bảng lương - ${note}`], []]; // title + blank row
-      const aoa = title.concat(salaryData);
-      const ws = XLSX.utils.aoa_to_sheet(aoa);
+      salaryTable.style.display = "block";
+    }
 
-      // Merges: merge title across 2 cột (A1:B1)
-      ws['!merges'] = ws['!merges'] || [];
-      ws['!merges'].push({s:{r:0,c:0}, e:{r:0,c:1}});
+    document
+      .getElementById("calcBtn")
+      .addEventListener("click", () => {
+        try {
+          salaryResult = calculateSalary();
+          renderSalary(salaryResult);
+        } catch (error) {
+          salaryResult = null;
 
-      // Cột rộng
-      ws['!cols'] = [{wch:40},{wch:20}];
+          document.getElementById(
+            "salaryTable"
+          ).style.display = "none";
 
-      // Styles & formats (community SheetJS ignores some style props but number formats work)
-      // Title style (try to set font + center)
-      if(!ws['A1']) ws['A1'] = {t:'s', v:`Bảng lương - ${note}`};
-      ws['A1'].s = {font:{name:'Arial', sz:14, bold:true}, alignment:{horizontal:'center', vertical:'center'}};
+          const errorBox =
+            document.getElementById("error");
 
-      // Header row is at index 3 in aoa (0-based): after title(0) and blank(1), header(2)
-      const headerRow = 2;
-      const headerA = XLSX.utils.encode_cell({r:headerRow,c:0});
-      const headerB = XLSX.utils.encode_cell({r:headerRow,c:1});
-      if(ws[headerA]) ws[headerA].s = {font:{bold:true}, fill:{fgColor:{rgb:"FF0B6BFF"}}, alignment:{horizontal:'left'}};
-      if(ws[headerB]) ws[headerB].s = {font:{bold:true}, fill:{fgColor:{rgb:"FF0B6BFF"}}, alignment:{horizontal:'right'}};
+          errorBox.textContent = "⚠️ " + error.message;
+          errorBox.style.display = "block";
+        }
+      });
 
-      // Set number format for amount cells and right align
-      for(let r = headerRow+1; r < aoa.length; r++){
-        const cellAddr = XLSX.utils.encode_cell({r:r, c:1}); // column B
-        if(ws[cellAddr]){
-          // make sure it's numeric
-          const val = ws[cellAddr].v;
-          if(typeof val === 'number'){
-            ws[cellAddr].t = 'n';
-            // Vietnamese style: thousands separator and currency symbol using custom format
-            ws[cellAddr].z = '#,##0 "₫"';
-            ws[cellAddr].s = {alignment:{horizontal:'right'}};
+    document
+      .getElementById("resetBtn")
+      .addEventListener("click", () => {
+        document
+          .querySelectorAll(
+            'input[type="number"], input[type="text"], input[type="month"]'
+          )
+          .forEach(input => {
+            input.value = "";
+          });
+
+        document.getElementById(
+          "error"
+        ).style.display = "none";
+
+        document.getElementById(
+          "salaryTable"
+        ).style.display = "none";
+
+        document.getElementById(
+          "tableBody"
+        ).innerHTML = "";
+
+        document.getElementById(
+          "tableNote"
+        ).textContent = "";
+
+        salaryResult = null;
+      });
+
+    document
+      .getElementById("exportExcelBtn")
+      .addEventListener("click", async () => {
+        try {
+          salaryResult = calculateSalary();
+          renderSalary(salaryResult);
+
+          await exportSalaryExcel(salaryResult);
+        } catch (error) {
+          const errorBox =
+            document.getElementById("error");
+
+          errorBox.textContent = "⚠️ " + error.message;
+          errorBox.style.display = "block";
+        }
+      });
+
+    async function exportSalaryExcel(data) {
+      const workbook = new ExcelJS.Workbook();
+
+      workbook.creator = "Bảng tính lương EXWIN";
+      workbook.created = new Date();
+
+      const worksheet = workbook.addWorksheet(
+        "Bảng lương",
+        {
+          pageSetup: {
+            paperSize: 9,
+            orientation: "portrait",
+            fitToPage: true,
+            fitToWidth: 1,
+            fitToHeight: 1,
+            margins: {
+              left: 0.25,
+              right: 0.25,
+              top: 0.35,
+              bottom: 0.35,
+              header: 0.2,
+              footer: 0.2
+            }
           }
+        }
+      );
+
+      worksheet.getColumn("A").width = 32;
+      worksheet.getColumn("B").width = 17;
+      worksheet.getColumn("C").width = 38;
+      worksheet.getColumn("D").width = 18;
+
+      worksheet.mergeCells("A1:D1");
+
+      const titleCell = worksheet.getCell("A1");
+      titleCell.value = data.title;
+      titleCell.font = {
+        name: "Arial",
+        size: 15,
+        bold: true
+      };
+      titleCell.alignment = {
+        horizontal: "center",
+        vertical: "middle"
+      };
+      worksheet.getRow(1).height = 26;
+
+      worksheet.mergeCells("A2:B2");
+      worksheet.mergeCells("C2:D2");
+
+      const fullNameCell = worksheet.getCell("A2");
+      fullNameCell.value = `Họ Và Tên: ${data.fullName}`;
+      fullNameCell.font = {
+        name: "Arial",
+        size: 11,
+        bold: true
+      };
+      fullNameCell.alignment = {
+        horizontal: "center",
+        vertical: "middle"
+      };
+
+      const cardNumberCell = worksheet.getCell("C2");
+      cardNumberCell.value = `Số Thẻ: ${data.cardNumber}`;
+      cardNumberCell.font = {
+        name: "Arial",
+        size: 11,
+        bold: true
+      };
+      cardNumberCell.alignment = {
+        horizontal: "center",
+        vertical: "middle"
+      };
+      worksheet.getRow(2).height = 28;
+
+      const rows = [
+        ["ngày công tiêu chuẩn", data.standardDays, "số giờ tăng ca ngày thường 150%", data.otNormal],
+        ["ngày công thực tế", data.actualDays, "số tiền tăng ca ngày thường", data.otNormalPay],
+        ["tổng lương tháng", data.totalSalary, "số giờ tăng ca Chủ nhật 200%", data.otSunday],
+        ["lương tính tăng ca", data.otSalaryInput, "số tiền tăng ca Chủ nhật", data.otSundayPay],
+        ["số tiền tăng ca mỗi giờ", data.hourlyOT, "số giờ tăng ca đêm cộng thêm 30%", data.otNight],
+        ["tiền chuyên cần", data.attendance, "số tiền tăng ca đêm cộng thêm 30%", data.otNightPay],
+        ["lương theo ngày công", data.baseSalaryByDays, "số giờ tăng ca đêm thường 150%", data.otNight150],
+        ["", "", "số tiền tăng ca đêm thường 150%", data.otNight150Pay],
+        ["", "", "số giờ tăng ca đêm thường 215%", data.ot215],
+        ["", "", "số tiền tăng ca đêm thường 215%", data.ot215Pay],
+        ["", "", "số giờ tăng ca đêm Chủ nhật 280%", data.otNightSun],
+        ["", "", "số tiền tăng ca đêm Chủ nhật", data.otNightSunPay],
+        ["", "", "Tổng Tiền Tăng Ca", data.totalOT],
+        ["", "", "", ""],
+        ["", "", "BẢO HIỂM 10,5%", data.insurance],
+        ["", "", "công đoàn phí 0,5%", data.unionFee],
+        ["", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "Tổng Lương", data.grossSalary],
+        ["", "", "Thực Lĩnh", data.netSalary]
+      ];
+
+      rows.forEach((rowData, index) => {
+        const rowNumber = index + 3;
+        const row = worksheet.getRow(rowNumber);
+        row.values = rowData;
+        row.height = 24;
+      });
+
+      const thinBorder = {
+        top: { style: "thin", color: { argb: "FF000000" } },
+        left: { style: "thin", color: { argb: "FF000000" } },
+        bottom: { style: "thin", color: { argb: "FF000000" } },
+        right: { style: "thin", color: { argb: "FF000000" } }
+      };
+
+      for (let rowNumber = 1; rowNumber <= 22; rowNumber++) {
+        for (let columnNumber = 1; columnNumber <= 4; columnNumber++) {
+          const cell = worksheet.getCell(rowNumber, columnNumber);
+          cell.font = {
+            name: "Arial",
+            size: 11
+          };
+          cell.alignment = {
+            vertical: "middle",
+            wrapText: true
+          };
+          cell.border = thinBorder;
         }
       }
 
-      // Workbook
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Bảng lương");
+      titleCell.font = {
+        name: "Arial",
+        size: 15,
+        bold: true
+      };
+      titleCell.alignment = {
+        horizontal: "center",
+        vertical: "middle"
+      };
 
-      // Tên file kèm ngày
+      fullNameCell.font = {
+        name: "Arial",
+        size: 11,
+        bold: true
+      };
+      fullNameCell.alignment = {
+        horizontal: "center",
+        vertical: "middle"
+      };
+
+      cardNumberCell.font = {
+        name: "Arial",
+        size: 11,
+        bold: true
+      };
+      cardNumberCell.alignment = {
+        horizontal: "center",
+        vertical: "middle"
+      };
+
+      for (let rowNumber = 3; rowNumber <= 22; rowNumber++) {
+        worksheet.getCell(`A${rowNumber}`).alignment = {
+          horizontal: "left",
+          vertical: "middle",
+          wrapText: true
+        };
+        worksheet.getCell(`C${rowNumber}`).alignment = {
+          horizontal: "left",
+          vertical: "middle",
+          wrapText: true
+        };
+        worksheet.getCell(`B${rowNumber}`).alignment = {
+          horizontal: "right",
+          vertical: "middle"
+        };
+        worksheet.getCell(`D${rowNumber}`).alignment = {
+          horizontal: "right",
+          vertical: "middle"
+        };
+      }
+
+      const moneyCells = [
+        "B5", "B6", "B7", "B8", "B9",
+        "D4", "D6", "D8", "D10", "D12", "D14",
+        "D15", "D17", "D18", "D21", "D22"
+      ];
+
+      moneyCells.forEach(address => {
+        worksheet.getCell(address).numFmt = "#,##0";
+      });
+
+      worksheet.getCell("B7").numFmt = "#,##0.00";
+
+      const hourCells = [
+        "D3", "D5", "D7", "D9", "D11", "D13"
+      ];
+
+      hourCells.forEach(address => {
+        worksheet.getCell(address).numFmt = "0.##";
+      });
+
+      const boldCells = [
+        "B3", "B4", "B5", "B6", "B8", "B9",
+        "D3", "D4", "D5", "D6", "D7", "D8",
+        "D9", "D10", "D11", "D12", "D13", "D14",
+        "C15", "D15", "C17", "D17", "C18", "D18",
+        "C21", "D21", "C22", "D22"
+      ];
+
+      boldCells.forEach(address => {
+        worksheet.getCell(address).font = {
+          name: "Arial",
+          size: 11,
+          bold: true
+        };
+      });
+
+      ["C17", "D17", "C18", "D18"].forEach(address => {
+        worksheet.getCell(address).fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FFFFF2F2" }
+        };
+      });
+
+      ["C21", "D21"].forEach(address => {
+        worksheet.getCell(address).fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FFEAF2F8" }
+        };
+      });
+
+      ["C22", "D22"].forEach(address => {
+        worksheet.getCell(address).fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FFD9EAD3" }
+        };
+        worksheet.getCell(address).font = {
+          name: "Arial",
+          size: 12,
+          bold: true
+        };
+      });
+
+      worksheet.views = [
+        {
+          state: "frozen",
+          ySplit: 2
+        }
+      ];
+
+      worksheet.pageSetup.printArea = "A1:D22";
+      worksheet.headerFooter.oddFooter =
+        "&LNgày xuất: &D&CTrang &P / &N&REXWIN";
+
       const now = new Date();
-      const y = now.getFullYear();
-      const m = String(now.getMonth()+1).padStart(2,'0');
-      const d = String(now.getDate()).padStart(2,'0');
-      const safeNote = note.replace(/[\\/:*?"<>|]/g,'').replace(/\s+/g,'_');
-      const filename = `BangLuong_${safeNote || 'export'}_${y}${m}${d}.xlsx`;
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
 
-      XLSX.writeFile(wb, filename);
-    });
+      const safeTitle = data.title
+        .replace(/[\\/:*?"<>|]/g, "")
+        .replace(/\s+/g, "_");
+
+      const safeName = data.fullName
+        .replace(/[\\/:*?"<>|]/g, "")
+        .replace(/\s+/g, "_");
+
+      const filename =
+        `BangLuong_${safeName}_${safeTitle}_${year}${month}${day}.xlsx`;
+
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      const blob = new Blob(
+        [buffer],
+        {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        }
+      );
+
+      saveAs(blob, filename);
+    }
+
+    /*
+     * Tự động chọn tháng hiện tại.
+     */
+    const today = new Date();
+
+    document.getElementById(
+      "salaryMonth"
+    ).value =
+      today.getFullYear() +
+      "-" +
+      String(today.getMonth() + 1).padStart(2, "0");
   </script>
 </body>
 </html>
-
-
